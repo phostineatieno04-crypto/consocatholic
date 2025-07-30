@@ -17,4 +17,4 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd ConsolataCatholicComprehensive/skulicheck && npm install && npm run dev"
+args = "cd ConsolataCatholicComprehensive/skulicheck && npm install && npm start"
