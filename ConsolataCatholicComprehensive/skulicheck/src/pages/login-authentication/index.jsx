@@ -14,14 +14,14 @@ const LoginAuthentication = () => {
   const [passwordResetModal, setPasswordResetModal] = useState(false);
   const [selectedRole, setSelectedRole] = useState('');
 
-  // Demo: Show session alert after component mounts
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSessionAlert({ isVisible: true, type: 'new-device' });
-    }, 3000);
+  // Demo: Show session alert after component mounts (disabled)
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setSessionAlert({ isVisible: true, type: 'new-device' });
+  //   }, 3000);
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   const handleBiometricLogin = (type) => {
     setBiometricModal({ isOpen: true, type });
