@@ -1,7 +1,7 @@
 
 from flask import Flask, request, jsonify, session
 from flask_cors import CORS
-from flask_mail import Flask_Mail, Message
+from flask_mail import Mail, Message
 import sqlite3
 import hashlib
 import secrets

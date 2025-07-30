@@ -4,6 +4,7 @@ import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import Select from '../../../components/ui/Select';
+import { apiService } from '../../../services/api';
 
 const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [cardRef = useRef(null);
+  const cardRef = useRef(null);
 
   // Mock credentials for different roles
   const mockCredentials = {

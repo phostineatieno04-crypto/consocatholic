@@ -10,8 +10,7 @@ sleep 2
 
 # Start the React development server
 echo "Starting SkuliCheck frontend server..."
-cd ..
-npm start
+npm start &
 
 # Cleanup function to kill backend when script exits
 cleanup() {
