@@ -1,0 +1,60 @@
+C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\src\pages\login-authentication\components\AuthenticationCard.jsx: Unexpected token, expected "," (228:6)
+  231 |           <p className="text-error text-sm flex items-center">
+C:/Users/Abiolah/Downloads/consolatacatholiccomprehensive/ConsolataCatholicComprehensive/skulicheck/src/pages/login-authentication/components/AuthenticationCard.jsx:228:6
+226|        
+227|  
+228|        {/* Error/Success Messages */}
+   |        ^
+229|        {errors.credentials && (
+230|          <div className="mb-4 p-3 bg-error/10 border border-error/20 rounded-lg">
+    at constructor (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:363:19)
+    at JSXParserMixin.raise (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:6609:19)
+    at JSXParserMixin.unexpected (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:6629:16)
+    at JSXParserMixin.expect (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:6910:12)
+    at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:11594:14)
+    at JSXParserMixin.parseExprAtom (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:11262:23)
+    at JSXParserMixin.parseExprAtom (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:4776:20)
+    at JSXParserMixin.parseExprSubscripts (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:11012:23)
+    at JSXParserMixin.parseUpdate (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10997:21)
+    at JSXParserMixin.parseMaybeUnary (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10977:23)
+    at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10830:61)
+    at JSXParserMixin.parseExprOps (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10835:23)
+    at JSXParserMixin.parseMaybeConditional (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10812:23)
+    at JSXParserMixin.parseMaybeAssign (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10765:21)
+    at JSXParserMixin.parseExpressionBase (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10718:23)
+    at C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10714:39
+    at JSXParserMixin.allowInAnd (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12356:16)
+    at JSXParserMixin.parseExpression (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10714:17)
+    at JSXParserMixin.parseReturnStatement (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:13061:28)
+    at JSXParserMixin.parseStatementContent (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12716:21)
+    at JSXParserMixin.parseStatementLike (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12685:17)
+    at JSXParserMixin.parseStatementListItem (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12665:17)
+    at JSXParserMixin.parseBlockOrModuleBlockBody (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:13235:61)
+    at JSXParserMixin.parseBlockBody (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:13228:10)
+    at JSXParserMixin.parseBlock (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:13216:10)
+    at JSXParserMixin.parseFunctionBody (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12035:24)
+    at JSXParserMixin.parseArrowExpression (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12010:10)
+    at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:11620:12)
+    at JSXParserMixin.parseExprAtom (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:11262:23)
+    at JSXParserMixin.parseExprAtom (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:4776:20)
+    at JSXParserMixin.parseExprSubscripts (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:11012:23)
+    at JSXParserMixin.parseUpdate (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10997:21)
+    at JSXParserMixin.parseMaybeUnary (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10977:23)
+    at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10830:61)
+    at JSXParserMixin.parseExprOps (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10835:23)
+    at JSXParserMixin.parseMaybeConditional (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10812:23)
+    at JSXParserMixin.parseMaybeAssign (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10765:21)
+    at C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10734:39
+    at JSXParserMixin.allowInAnd (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12356:16)
+    at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:10734:17)
+    at JSXParserMixin.parseVar (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:13303:91)
+    at JSXParserMixin.parseVarStatement (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:13149:10)
+    at JSXParserMixin.parseStatementContent (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12770:23)
+    at JSXParserMixin.parseStatementLike (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12685:17)
+    at JSXParserMixin.parseModuleItem (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12662:17)
+    at JSXParserMixin.parseBlockOrModuleBlockBody (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:13235:36)
+    at JSXParserMixin.parseBlockBody (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:13228:10)
+    at JSXParserMixin.parseProgram (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12541:10)
+    at JSXParserMixin.parseTopLevel (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:12531:25)
+    at JSXParserMixin.parse (C:\Users\Abiolah\Downloads\consolatacatholiccomprehensive\ConsolataCatholicComprehensive\skulicheck\node_modules\@babel\parser\lib\index.js:14410:10
+Click outside, press Esc key, or fix the code to dismiss.

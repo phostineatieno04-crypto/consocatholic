@@ -1,0 +1,20 @@
+modules = ["python-3.11"]
+run = "run"
+[nix]
+channel = "stable-25_05"
+packages = ["file", "nano"]
+
+[deployment]
+run = ["sh", "-c", "run"]
+
+[workflows]
+runButton = "Start App"
+
+[[workflows.workflow]]
+name = "Start App"
+author = 45154824
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd skulicheck && npm start"
