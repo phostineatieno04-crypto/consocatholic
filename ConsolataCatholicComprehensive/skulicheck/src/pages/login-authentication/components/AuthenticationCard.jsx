@@ -21,7 +21,7 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const cardRef = useRef(null);
+  const [cardRef = useRef(null);
 
   // Mock credentials for different roles
   const mockCredentials = {
@@ -51,7 +51,7 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
     if (!selectedRole) newErrors.role = 'Please select your role';
     if (!credentials.username) newErrors.username = 'Username is required';
     if (!credentials.password) newErrors.password = 'Password is required';
-    
+
     if (authMode === 'signup' || authMode === 'register') {
       if (!credentials.fullName) newErrors.fullName = 'Full name is required';
       if (!credentials.confirmPassword) newErrors.confirmPassword = 'Please confirm your password';
@@ -68,7 +68,7 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
         newErrors.phone = 'Phone number is required';
       }
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -83,9 +83,38 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
     }
 
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    //await new Promise(resolve => setTimeout(resolve, 2000));
 
-    if (authMode === 'signin') {
+    // Simulating API call
+    // await new Promise(resolve => setTimeout(resolve, 1500));
+
+    // Mock successful login
+    // navigate('/student-dashboard');
+    try {
+      const response = await apiService.login(credentials.username, credentials.password);
+
+      // Navigate based on user role
+      const userRole = response.user.role.toLowerCase();
+      const dashboardRoutes = {
+        Admin: '/admin-dashboard',
+        Teacher: '/teacher-dashboard',
+        Parent: '/parent-dashboard',
+        Student: '/student-dashboard'
+      };
+
+      navigate(dashboardRoutes[selectedRole]);
+      // Show success message
+      console.log('Login successful:', response.user.fullName);
+
+    } catch (error) {
+      console.error('Login failed:', error);
+      // You can add toast notification here
+      alert('Login failed: ' + error.message);
+    } finally {
+      setIsLoading(false);
+    }
+
+    /* if (authMode === 'signin') {
       const roleCredentials = mockCredentials[selectedRole];
       if (
         credentials.username === roleCredentials.username &&
@@ -120,7 +149,7 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
         });
         setErrors({});
       }, 2000);
-    }
+    } */
     setIsLoading(false);
   };
 
@@ -244,7 +273,7 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
             className="focus-glow"
           />
         )}
-        
+
         <Input
           label="Username / Email"
           type="email"
@@ -255,7 +284,7 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
           required
           className="focus-glow"
         />
-        
+
         {(authMode === 'signup' || authMode === 'register') && (selectedRole === 'Teacher' || selectedRole === 'Admin') && (
           <Input
             label="Employee ID"
@@ -268,7 +297,7 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
             className="focus-glow"
           />
         )}
-        
+
         {(authMode === 'signup' || authMode === 'register') && selectedRole === 'Parent' && (
           <Input
             label="Phone Number"
@@ -281,7 +310,7 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
             className="focus-glow"
           />
         )}
-        
+
         <div className="relative">
           <Input
             label="Password"
@@ -301,7 +330,7 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
             <Icon name={showPassword ? 'EyeOff' : 'Eye'} size={18} />
           </button>
         </div>
-        
+
         {(authMode === 'signup' || authMode === 'register') && (
           <div className="relative">
             <Input
@@ -323,7 +352,7 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
             </button>
           </div>
         )}
-        
+
         <div className="flex items-center justify-between">
           <label className="flex items-center space-x-2 cursor-pointer">
             <input

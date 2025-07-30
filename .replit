@@ -8,7 +8,7 @@ localPort = 4028
 externalPort = 80
 
 [workflows]
-runButton = "Start SkuliCheck"
+runButton = "Start Full Stack"
 
 [[workflows.workflow]]
 name = "Start SkuliCheck"
@@ -18,3 +18,12 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd ConsolataCatholicComprehensive/skulicheck && npm install && npm start"
+
+[[workflows.workflow]]
+name = "Start Full Stack"
+author = 45736865
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd ConsolataCatholicComprehensive/skulicheck && chmod +x start-dev.sh && ./start-dev.sh"
