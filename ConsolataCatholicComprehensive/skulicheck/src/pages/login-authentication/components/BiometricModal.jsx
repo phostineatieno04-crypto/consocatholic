@@ -9,6 +9,18 @@ const BiometricModal = ({ isOpen, onClose, type = 'fingerprint', selectedRole })
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    if (isOpen) {
+      // Auto-start scanning when modal opens
+      const startTimer = setTimeout(() => {
+        setScanningState('scanning');
+        setProgress(0);
+      }, 500);
+
+      return () => clearTimeout(startTimer);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
     if (isOpen && scanningState === 'scanning') {
       const interval = setInterval(() => {
         setProgress(prev => {
@@ -133,7 +145,6 @@ const BiometricModal = ({ isOpen, onClose, type = 'fingerprint', selectedRole })
           {/* Status Text */}
           <div className="space-y-2">
             <p className="text-foreground font-medium">
-              {scanningState === 'idle' && content.instruction}
               {scanningState === 'scanning' && content.scanningText}
               {scanningState === 'success' && content.successText}
               {scanningState === 'error' && 'Authentication failed. Please try again.'}
@@ -141,8 +152,9 @@ const BiometricModal = ({ isOpen, onClose, type = 'fingerprint', selectedRole })
             
             {scanningState === 'scanning' && (
               <p className="text-sm text-muted-foreground">
-                {progress < 50 ? 'Initializing scanner...' : 
-                 progress < 80 ? 'Capturing biometric data...': 'Verifying identity...'}
+                {progress < 30 ? 'Initializing biometric scanner...' : 
+                 progress < 70 ? 'Capturing and analyzing data...': 
+                 progress < 95 ? 'Verifying identity...' : 'Authentication complete!'}
               </p>
             )}
           </div>
@@ -165,32 +177,10 @@ const BiometricModal = ({ isOpen, onClose, type = 'fingerprint', selectedRole })
 
         {/* Action Buttons */}
         <div className="flex space-x-3">
-          {scanningState === 'idle' && (
-            <>
-              <Button
-                variant="outline"
-                onClick={onClose}
-                className="flex-1"
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="default"
-                onClick={handleStartScan}
-                iconName="Play"
-                iconPosition="left"
-                iconSize={16}
-                className="flex-1"
-              >
-                Start Scan
-              </Button>
-            </>
-          )}
-
           {scanningState === 'scanning' && (
             <Button
               variant="outline"
-              onClick={() => setScanningState('idle')}
+              onClick={onClose}
               className="w-full"
             >
               Cancel Scan

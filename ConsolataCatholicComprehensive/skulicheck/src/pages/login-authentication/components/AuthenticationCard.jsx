@@ -5,9 +5,9 @@ import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import Select from '../../../components/ui/Select';
 
-const AuthenticationCard = () => {
+const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) => {
   const navigate = useNavigate();
-  const [selectedRole, setSelectedRole] = useState('');
+  // Remove local selectedRole state as it's now passed as prop
   const [credentials, setCredentials] = useState({
     username: '',
     password: ''
@@ -124,7 +124,7 @@ const AuthenticationCard = () => {
           label="Select Role"
           options={roleOptions}
           value={selectedRole}
-          onChange={setSelectedRole}
+          onChange={onRoleChange}
           error={errors.role}
           required
           className="mb-4"
@@ -237,18 +237,27 @@ const AuthenticationCard = () => {
         </p>
         <div className="flex justify-center space-x-4">
           <button
-            className="w-12 h-12 bg-muted/10 hover:bg-muted/20 rounded-full flex items-center justify-center transition-all duration-200 animate-pulse-scanner"
+            onClick={() => onBiometricLogin('fingerprint')}
+            disabled={!selectedRole}
+            className="w-12 h-12 bg-muted/10 hover:bg-muted/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
             title="Fingerprint Login"
           >
             <Icon name="Fingerprint" size={24} className="text-accent" />
           </button>
           <button
-            className="w-12 h-12 bg-muted/10 hover:bg-muted/20 rounded-full flex items-center justify-center transition-all duration-200 animate-pulse-scanner"
+            onClick={() => onBiometricLogin('face')}
+            disabled={!selectedRole}
+            className="w-12 h-12 bg-muted/10 hover:bg-muted/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
             title="Face Recognition"
           >
             <Icon name="ScanFace" size={24} className="text-secondary" />
           </button>
         </div>
+        {!selectedRole && (
+          <p className="text-xs text-muted-foreground text-center mt-2">
+            Please select your role first
+          </p>
+        )}
       </div>
 
       {/* Footer */}
