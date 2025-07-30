@@ -7,14 +7,19 @@ import Select from '../../../components/ui/Select';
 
 const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) => {
   const navigate = useNavigate();
-  // Remove local selectedRole state as it's now passed as prop
+  const [authMode, setAuthMode] = useState('signin'); // 'signin', 'signup', 'register'
   const [credentials, setCredentials] = useState({
     username: '',
-    password: ''
+    password: '',
+    confirmPassword: '',
+    fullName: '',
+    phone: '',
+    employeeId: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const cardRef = useRef(null);
 
@@ -46,11 +51,29 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
     if (!selectedRole) newErrors.role = 'Please select your role';
     if (!credentials.username) newErrors.username = 'Username is required';
     if (!credentials.password) newErrors.password = 'Password is required';
+    
+    if (authMode === 'signup' || authMode === 'register') {
+      if (!credentials.fullName) newErrors.fullName = 'Full name is required';
+      if (!credentials.confirmPassword) newErrors.confirmPassword = 'Please confirm your password';
+      if (credentials.password !== credentials.confirmPassword) {
+        newErrors.confirmPassword = 'Passwords do not match';
+      }
+      if (credentials.password.length < 6) {
+        newErrors.password = 'Password must be at least 6 characters';
+      }
+      if (selectedRole === 'Teacher' || selectedRole === 'Admin') {
+        if (!credentials.employeeId) newErrors.employeeId = 'Employee ID is required';
+      }
+      if (selectedRole === 'Parent' && !credentials.phone) {
+        newErrors.phone = 'Phone number is required';
+      }
+    }
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleLogin = async () => {
+  const handleSubmit = async () => {
     if (!validateForm()) {
       if (cardRef.current) {
         cardRef.current.style.animation = 'shake 0.5s ease-in-out';
@@ -62,22 +85,41 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    const roleCredentials = mockCredentials[selectedRole];
-    if (
-      credentials.username === roleCredentials.username &&
-      credentials.password === roleCredentials.password
-    ) {
-      const dashboardRoutes = {
-        Admin: '/admin-dashboard',
-        Teacher: '/teacher-dashboard',
-        Parent: '/parent-dashboard',
-        Student: '/student-dashboard'
-      };
-      navigate(dashboardRoutes[selectedRole]);
+    if (authMode === 'signin') {
+      const roleCredentials = mockCredentials[selectedRole];
+      if (
+        credentials.username === roleCredentials.username &&
+        credentials.password === roleCredentials.password
+      ) {
+        const dashboardRoutes = {
+          Admin: '/admin-dashboard',
+          Teacher: '/teacher-dashboard',
+          Parent: '/parent-dashboard',
+          Student: '/student-dashboard'
+        };
+        navigate(dashboardRoutes[selectedRole]);
+      } else {
+        setErrors({
+          credentials: `Invalid credentials. Use ${roleCredentials.username} / ${roleCredentials.password}`
+        });
+      }
     } else {
+      // Registration successful
       setErrors({
-        credentials: `Invalid credentials. Use ${roleCredentials.username} / ${roleCredentials.password}`
+        success: `Registration successful! You can now sign in with your credentials.`
       });
+      setTimeout(() => {
+        setAuthMode('signin');
+        setCredentials({
+          username: credentials.username,
+          password: '',
+          confirmPassword: '',
+          fullName: '',
+          phone: '',
+          employeeId: ''
+        });
+        setErrors({});
+      }, 2000);
     }
     setIsLoading(false);
   };
@@ -118,6 +160,40 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
         <p className="text-muted-foreground text-sm">Educational Management System</p>
       </div>
 
+      {/* Auth Mode Toggle */}
+      <div className="flex mb-6 p-1 bg-muted/10 rounded-lg">
+        <button
+          onClick={() => setAuthMode('signin')}
+          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+            authMode === 'signin' 
+              ? 'bg-primary text-primary-foreground shadow-sm' 
+              : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          Sign In
+        </button>
+        <button
+          onClick={() => setAuthMode('signup')}
+          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+            authMode === 'signup' 
+              ? 'bg-primary text-primary-foreground shadow-sm' 
+              : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          Sign Up
+        </button>
+        <button
+          onClick={() => setAuthMode('register')}
+          className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+            authMode === 'register' 
+              ? 'bg-primary text-primary-foreground shadow-sm' 
+              : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          Register
+        </button>
+      </div>
+
       {/* Role Selection */}
       <div className="mb-6">
         <Select
@@ -156,6 +232,19 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
 
       {/* Credentials Form */}
       <div className="space-y-4 mb-6">
+        {(authMode === 'signup' || authMode === 'register') && (
+          <Input
+            label="Full Name"
+            type="text"
+            placeholder="Enter your full name"
+            value={credentials.fullName}
+            onChange={(e) => handleInputChange('fullName', e.target.value)}
+            error={errors.fullName}
+            required
+            className="focus-glow"
+          />
+        )}
+        
         <Input
           label="Username / Email"
           type="email"
@@ -166,6 +255,33 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
           required
           className="focus-glow"
         />
+        
+        {(authMode === 'signup' || authMode === 'register') && (selectedRole === 'Teacher' || selectedRole === 'Admin') && (
+          <Input
+            label="Employee ID"
+            type="text"
+            placeholder="Enter your employee ID"
+            value={credentials.employeeId}
+            onChange={(e) => handleInputChange('employeeId', e.target.value)}
+            error={errors.employeeId}
+            required
+            className="focus-glow"
+          />
+        )}
+        
+        {(authMode === 'signup' || authMode === 'register') && selectedRole === 'Parent' && (
+          <Input
+            label="Phone Number"
+            type="tel"
+            placeholder="Enter your phone number"
+            value={credentials.phone}
+            onChange={(e) => handleInputChange('phone', e.target.value)}
+            error={errors.phone}
+            required
+            className="focus-glow"
+          />
+        )}
+        
         <div className="relative">
           <Input
             label="Password"
@@ -185,6 +301,29 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
             <Icon name={showPassword ? 'EyeOff' : 'Eye'} size={18} />
           </button>
         </div>
+        
+        {(authMode === 'signup' || authMode === 'register') && (
+          <div className="relative">
+            <Input
+              label="Confirm Password"
+              type={showConfirmPassword ? 'text' : 'password'}
+              placeholder="Confirm your password"
+              value={credentials.confirmPassword}
+              onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+              error={errors.confirmPassword}
+              required
+              className="focus-glow"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-9 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Icon name={showConfirmPassword ? 'EyeOff' : 'Eye'} size={18} />
+            </button>
+          </div>
+        )}
+        
         <div className="flex items-center justify-between">
           <label className="flex items-center space-x-2 cursor-pointer">
             <input
@@ -193,11 +332,15 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
               onChange={(e) => setRememberMe(e.target.checked)}
               className="w-4 h-4 text-primary bg-input border-border rounded focus:ring-primary focus:ring-2"
             />
-            <span className="text-sm text-muted-foreground">Remember me</span>
+            <span className="text-sm text-muted-foreground">
+              {authMode === 'signin' ? 'Remember me' : 'I agree to terms & conditions'}
+            </span>
           </label>
-          <button className="text-sm text-primary hover:text-primary/80 transition-colors">
-            Forgot password?
-          </button>
+          {authMode === 'signin' && (
+            <button className="text-sm text-primary hover:text-primary/80 transition-colors">
+              Forgot password?
+            </button>
+          )}
         </div>
       </div>
 
@@ -219,46 +362,48 @@ const AuthenticationCard = ({ onBiometricLogin, selectedRole, onRoleChange }) =>
         </div>
       )}
 
-      {/* Login Button */}
+      {/* Submit Button */}
       <Button
         variant="default"
-        onClick={handleLogin}
+        onClick={handleSubmit}
         disabled={isLoading}
         loading={isLoading}
         className="w-full mb-6 focus-glow"
       >
-        Sign In
+        {authMode === 'signin' ? 'Sign In' : authMode === 'signup' ? 'Sign Up' : 'Register Account'}
       </Button>
 
-      {/* Biometric Options */}
-      <div className="border-t border-border pt-6">
-        <p className="text-center text-sm text-muted-foreground mb-4">
-          Quick Access Options
-        </p>
-        <div className="flex justify-center space-x-4">
-          <button
-            onClick={() => onBiometricLogin('fingerprint')}
-            disabled={!selectedRole}
-            className="w-12 h-12 bg-muted/10 hover:bg-muted/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-            title="Fingerprint Login"
-          >
-            <Icon name="Fingerprint" size={24} className="text-accent" />
-          </button>
-          <button
-            onClick={() => onBiometricLogin('face')}
-            disabled={!selectedRole}
-            className="w-12 h-12 bg-muted/10 hover:bg-muted/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-            title="Face Recognition"
-          >
-            <Icon name="ScanFace" size={24} className="text-secondary" />
-          </button>
-        </div>
-        {!selectedRole && (
-          <p className="text-xs text-muted-foreground text-center mt-2">
-            Please select your role first
+      {/* Biometric Options - Only show for Sign In */}
+      {authMode === 'signin' && (
+        <div className="border-t border-border pt-6">
+          <p className="text-center text-sm text-muted-foreground mb-4">
+            Quick Access Options
           </p>
-        )}
-      </div>
+          <div className="flex justify-center space-x-4">
+            <button
+              onClick={() => onBiometricLogin('fingerprint')}
+              disabled={!selectedRole}
+              className="w-12 h-12 bg-muted/10 hover:bg-muted/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+              title="Fingerprint Login"
+            >
+              <Icon name="Fingerprint" size={24} className="text-accent" />
+            </button>
+            <button
+              onClick={() => onBiometricLogin('face')}
+              disabled={!selectedRole}
+              className="w-12 h-12 bg-muted/10 hover:bg-muted/20 disabled:opacity-50 disabled:cursor-not-allowed rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+              title="Face Recognition"
+            >
+              <Icon name="ScanFace" size={24} className="text-secondary" />
+            </button>
+          </div>
+          {!selectedRole && (
+            <p className="text-xs text-muted-foreground text-center mt-2">
+              Please select your role first
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Footer */}
       <div className="text-center mt-6 pt-4 border-t border-border">
